@@ -1,0 +1,1 @@
+select * from KLK_SAP_ARTICULO where FechaModificacion > @FechaModificacion

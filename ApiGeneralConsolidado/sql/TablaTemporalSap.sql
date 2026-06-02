@@ -1,0 +1,1 @@
+select distinct [Name],U_ACCION from [@KLK_ARTICULOS] where U_ACTUALIZADO = 'N' and U_SUCURSAL = 'CONS'

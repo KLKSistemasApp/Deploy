@@ -1,0 +1,14 @@
+MERGE KLK_SAP_BARRAS AS DESTINO
+USING #TempBarras AS ORIGEN
+ON DESTINO.CodArticulo = ORIGEN.CodArticulo
+   AND DESTINO.CodBarra = ORIGEN.CodBarra
+   AND DESTINO.Id_UndMd = ORIGEN.Id_UndMd
+
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (CodArticulo, CodBarra, Id_UndMd)
+    VALUES (ORIGEN.CodArticulo, ORIGEN.CodBarra, ORIGEN.Id_UndMd)
+
+WHEN NOT MATCHED BY SOURCE AND 
+     DESTINO.CodArticulo IN (SELECT value FROM OPENJSON(@CodArticulo)) THEN
+    DELETE;
+DROP TABLE #TempBarras;

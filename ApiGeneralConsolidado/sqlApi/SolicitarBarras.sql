@@ -1,0 +1,1 @@
+select * from KLK_SAP_BARRAS where CodArticulo in (SELECT value FROM OPENJSON(@CodArticulo))

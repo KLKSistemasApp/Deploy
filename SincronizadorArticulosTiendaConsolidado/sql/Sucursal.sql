@@ -1,1 +1,0 @@
-select top 1 CodigoSucursal,NombreSucursal,BPLId from KLK_PARAMETRIZACION_SUCURSAL

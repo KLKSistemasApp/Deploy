@@ -1,0 +1,1 @@
+select * from KLK_SAP_PRECIOS where CodigoListaPrecio in (SELECT value FROM OPENJSON(@CodListaPrecio)) and CodArticulo in (SELECT value FROM OPENJSON(@CodArticulo))

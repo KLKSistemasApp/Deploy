@@ -1,0 +1,1 @@
+update [@KLK_ARTICULOS] set U_actualizado = 'Y' where [Name] in (SELECT value FROM OPENJSON(@CodArticulo)) and U_SUCURSAL = 'CONS'
