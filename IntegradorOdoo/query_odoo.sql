@@ -1,6 +1,14 @@
 -- Identificar el lote de facturas
 DECLARE @Pendientes TABLE (id Nvarchar(50));
-INSERT INTO @Pendientes SELECT TOP 100 NumFactura FROM KLK_FACTURAHDR WHERE EnviadoASAP = 0 ORDER BY FechaFactura ASC;
+INSERT INTO @Pendientes SELECT TOP 100 NumFactura FROM (
+    SELECT NumFactura, 0 AS priority, FechaFactura
+    FROM KLK_FACTURAHDR
+    WHERE EnviadoASAP = 0 AND LogErrorIntegrador IS NULL
+    UNION ALL
+    SELECT NumFactura, 1 AS priority, FechaFactura
+    FROM KLK_FACTURAHDR
+    WHERE EnviadoASAP = 0 AND LogErrorIntegrador IS NOT NULL
+) AS sub ORDER BY priority ASC, FechaFactura ASC;
 
 -- RESULTSET [0]: Cabeceras
 SELECT 
@@ -22,7 +30,8 @@ WHERE F.NumFactura IN (SELECT id FROM @Pendientes);
 -- RESULTSET [1]: Líneas
 SELECT NumFactura, CodArticulo AS product_id, Cantidad AS qty,
     -- TotalDespDescuentosUsd/Cantidad  AS price_unit  -- query en usd
-    TotalDespDescuentos/Cantidad  AS price_unit  -- query en bs
+    TotalDespDescuentos/Cantidad  AS price_unit,  -- query en bs
+    CodigoAlmacen AS warehouse_code
 FROM KLK_FACTURALINE WITH (NOLOCK)
 WHERE NumFactura IN (SELECT id FROM @Pendientes);
 

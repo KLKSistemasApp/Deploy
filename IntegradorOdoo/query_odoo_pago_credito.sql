@@ -2,8 +2,11 @@ SELECT RCL.NroRecibo AS rcl_id, CL.NFactura AS NumFactura, PC.IdFPagoSAP AS jour
      --CL.MontoUsd AS amount, -- query en usd
     CL.Monto AS amount,  -- query en bs
     CL.FormadePago, CL.NTransaccion, CL.TarjetaCredito,
-    CASE WHEN CL.FormadePago = 'Pago Nota de crédito' THEN 1 ELSE 0 END AS es_nota_credito
+    CASE WHEN CL.FormadePago = 'Pago Nota de crédito' THEN 1 ELSE 0 END AS es_nota_credito,
+    C.DiasCredito
 FROM KLK_RECIBOCOBROLINE RCL WITH (NOLOCK)
 join KLK_COBROLINE CL on RCL.NroCobro = CL.NroCobro and CL.Monto = RCL.TotalAbonado
 JOIN KLK_SAP_PLANDECUENTA PC ON CL.CuentaSAP = PC.CodigoCuenta
+JOIN KLK_FACTURAHDR F ON CL.NFactura = F.NumFactura
+JOIN KLK_CLIENTE C ON F.CodCliente = C.CodCliente
 WHERE RCL.EnviadoASAP = 0;
