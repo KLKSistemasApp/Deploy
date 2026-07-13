@@ -15,7 +15,7 @@ SELECT distinct
 	prhdr.[Codigo]
       ,prhdr.[Descripcion]
       ,prhdr.[MensajePromo]
-	,IIF(prs.Disponible = 1, prhdr.Estatus, 0 ) as Estatus
+	,IIF(prs.Disponible = 1, prhdr.Estatus, 1 ) as Estatus
       ,prhdr.[FechaInicio]
       ,prhdr.[FechaFin]
       ,prhdr.[HoraInicio]

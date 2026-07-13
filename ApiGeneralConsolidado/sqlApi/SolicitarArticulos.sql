@@ -1,1 +1,1 @@
-select * from KLK_SAP_ARTICULO where FechaModificacion > @FechaModificacion
+select a.*,m.Nombre as NomMarca from KLK_SAP_ARTICULO a join KLK_marca m on a.Marca = m.Codigo  where a.FechaModificacion > @FechaModificacion

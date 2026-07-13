@@ -1,1 +1,1 @@
-select top 1 TasaDolar from KLK_PARAMETRIZACION
+select top 1 TasaDolar from KLK_PARAMETRIZACION where FechaModificacionTasa < @FechaModificacionFinal
