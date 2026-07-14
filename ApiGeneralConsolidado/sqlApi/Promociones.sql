@@ -76,3 +76,5 @@ ELSE
 BEGIN
     SELECT TOP 0 * FROM KLK_PROMOCION_PARAMETRIZACION;
 END
+
+select * from KLK_SAP_LISTAPRECIO where CodigoListaPrecio like 'PRMO%' and FechaModificacion > @FechaModificacion;
