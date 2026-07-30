@@ -4,7 +4,7 @@ select fp.[CodFPago]
       ,fp.[CuentaSAP]
       ,fp.[PorcRetISLR]
       ,fp.[PorcDebBanc]
-      ,fp.[Activo]
+      ,iif(fp.[Activo] = 1, fps.Asignada, 0) as [Activo]
       ,fps.CuentaContable as [CodCtaSAP]
       ,fp.[TarjetaCredito]
       ,fps.CuentaSAp as [IdFPagoSAP]
@@ -18,5 +18,4 @@ select fp.[CodFPago]
       ,fp.[FechaModificacion]
 	  from KLK_FORMAPAGO fp
 join KLK_FORMAPAGO_SUCURSAL fps on fp.CodFPago = fps.CodFPago and fps.CodSucursal = @IdSucursal
- where fps.FechaModificacion > @FechaModificacion
-and fps.Asignada = 1;
+ where fps.FechaModificacion > @FechaModificacion;
