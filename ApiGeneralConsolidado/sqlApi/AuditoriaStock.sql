@@ -1,0 +1,23 @@
+select 
+    ObjType,
+    DocNum ,
+    DocDate ,
+    ItemCode ,
+    Dscription ,
+    Inqty ,
+    Ouqty ,
+    Balance,
+    WhsCode ,
+    Bplid ,
+    Bplname ,
+    ItmsGrpNam ,
+    Hora ,
+    CodCaja ,
+    CodApertura ,
+    TipoDoc ,
+    NumLine ,
+    OdooId ,
+    WhsCodeHome,
+    WhsCodeHome ,
+    Comentario
+from KLK_AUDITORIA_STOCK where docdate > @FechaModificacionFinal and objtype not in ('13', '14') and WhsCode in (select value from OPENJSON(@Almacenes));
